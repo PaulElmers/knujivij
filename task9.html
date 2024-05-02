@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сортування таблиці</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Таблиця з даними для сортування</h1>
+
+<table id="dataTable">
+    <thead>
+        <tr>
+            <th onclick="sortTable(0)">Ім'я</th>
+            <th onclick="sortTable(1)">Вік</th>
+            <th onclick="sortTable(2)">Посада</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Іван</td>
+            <td>25</td>
+            <td>Розробник</td>
+        </tr>
+        <tr>
+            <td>Марія</td>
+            <td>30</td>
+            <td>Дизайнер</td>
+        </tr>
+        <tr>
+            <td>Петро</td>
+            <td>22</td>
+            <td>Тестувальник</td>
+        </tr>
+        <tr>
+            <td>Олена</td>
+            <td>35</td>
+            <td>Менеджер</td>
+        </tr>
+    </tbody>
+</table>
+
+<script>
+    function sortTable(columnIndex) {
+        const table = document.getElementById('dataTable');
+        const tbody = table.querySelector('tbody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        const dataType = columnIndex === 1 ? 'number' : 'string';
+        rows.sort((rowA, rowB) => {
+            const cellA = rowA.children[columnIndex].textContent;
+            const cellB = rowB.children[columnIndex].textContent;
+
+            if (dataType === 'number') {
+                return parseInt(cellA) - parseInt(cellB);
+            } else {
+                return cellA.localeCompare(cellB);
+            }
+        });
+        tbody.innerHTML = '';
+        rows.forEach(row => tbody.appendChild(row));
+    }
+</script>
+
+</body>
+</html>

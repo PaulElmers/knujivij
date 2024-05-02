@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список посилань</title>
+    <style>
+        .external-link {
+            border-bottom: 1px dashed blue;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Список посилань</h1>
+
+<ul id="linksList">
+    <li><a href="https://www.example.com">Посилання на зовнішній сайт</a></li>
+    <li><a href="internal.html">Посилання на внутрішній файл</a></li>
+    <li><a href="https://www.google.com">Ще одне зовнішнє посилання</a></li>
+</ul>
+
+<script>
+    function styleExternalLinks() {
+        const links = document.querySelectorAll('#linksList a');
+
+        links.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href.startsWith('http://') || href.startsWith('https://')) {
+                link.classList.add('external-link');
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        styleExternalLinks();
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Галерея</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        img {
+            max-width: 80%;
+            height: auto;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <h1>Галерея зображень</h1>
+    <div id="imageContainer">
+        <img id="galleryImage" src="" alt="Зображення галереї">
+    </div>
+    <div>
+        <button onclick="previousImage()" id="prevButton" disabled>Назад</button>
+        <button onclick="nextImage()" id="nextButton" disabled>Вперед</button>
+    </div>
+
+    <script>
+        const images = [
+            'image1.jpg',
+            'image2.jpg',
+            'image3.jpg'
+        ];
+
+        let currentIndex = 0;
+        const galleryImage = document.getElementById('galleryImage');
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+        function updateGallery() {
+            galleryImage.src = images[currentIndex];
+            prevButton.disabled = currentIndex === 0;
+            nextButton.disabled = currentIndex === images.length - 1;
+        }
+        function previousImage() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateGallery();
+            }
+        }
+        function nextImage() {
+            if (currentIndex < images.length - 1) {
+                currentIndex++;
+                updateGallery();
+            }
+        }
+        updateGallery();
+    </script>
+</body>
+</html>

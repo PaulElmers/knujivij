@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список книг</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            cursor: pointer;
+            padding: 5px;
+        }
+        .selected {
+            color: orange;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Список книг</h1>
+
+<ul id="bookList">
+    <li>Війна і мир</li>
+    <li>Преступленіе и наказание</li>
+    <li>1984</li>
+    <li>Майстер і Маргарита</li>
+    <li>Анна Кареніна</li>
+    <li>Гаррі Поттер і філософський камінь</li>
+    <li>Три товариші</li>
+    <li>Маленький принц</li>
+</ul>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const bookList = document.getElementById('bookList');
+        let lastClickedIndex = -1;
+        let ctrlPressed = false;
+
+        function handleItemClick(event) {
+            const target = event.target;
+            const index = Array.from(bookList.children).indexOf(target);
+
+            if (event.ctrlKey) {
+                target.classList.toggle('selected');
+            } else if (event.shiftKey && lastClickedIndex !== -1) {
+                const startIndex = Math.min(index, lastClickedIndex);
+                const endIndex = Math.max(index, lastClickedIndex);
+
+                for (let i = startIndex; i <= endIndex; i++) {
+                    bookList.children[i].classList.add('selected');
+                }
+            } else {
+                const isSelected = target.classList.contains('selected');
+                bookList.querySelectorAll('li').forEach(item => item.classList.remove('selected'));
+
+                if (!isSelected) {
+                    target.classList.add('selected');
+                }
+            }
+
+            lastClickedIndex = index;
+        }
+
+        bookList.querySelectorAll('li').forEach(item => {
+            item.addEventListener('click', handleItemClick);
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Control') {
+                ctrlPressed = true;
+            }
+        });
+
+        document.addEventListener('keyup', (event) => {
+            if (event.key === 'Control') {
+                ctrlPressed = false;
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

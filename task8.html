@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редагування тексту</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Редагування тексту</h1>
+
+<div id="textDisplay">
+    <p>Це текст, який можна редагувати. Натисніть Ctrl+E для редагування.</p>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const textDisplay = document.getElementById('textDisplay');
+        let originalText = textDisplay.textContent.trim();
+        function enableEditMode() {
+            const textarea = document.createElement('textarea');
+            textarea.textContent = originalText;
+            textDisplay.innerHTML = '';
+            textDisplay.appendChild(textarea);
+            textarea.focus();
+        }
+        function saveChanges() {
+            const textarea = textDisplay.querySelector('textarea');
+            originalText = textarea.value; 
+            const newDiv = document.createElement('div');
+            newDiv.textContent = originalText;
+            textDisplay.innerHTML = ''; 
+            textDisplay.appendChild(newDiv);
+        }
+        document.addEventListener('keydown', (event) => {
+            if (event.ctrlKey && event.key === 'e') {
+                event.preventDefault();
+                enableEditMode();
+            } else if (event.ctrlKey && event.key === 's') {
+                event.preventDefault();
+                saveChanges();
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

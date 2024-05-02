@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сторінка з новинами</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        #newsList {
+            list-style-type: none;
+            padding: 0;
+        }
+        .news-item {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        #loadMoreButton {
+            display: block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Останні новини</h1>
+
+<ul id="newsList"></ul>
+
+<button id="loadMoreButton" onclick="loadMoreNews()">Завантажити більше</button>
+
+<script>
+    const newsData = [
+        { title: 'Новина 1', content: 'Це перша новина' },
+        { title: 'Новина 2', content: 'Це друга новина' },
+        { title: 'Новина 3', content: 'Це третя новина' },
+        { title: 'Новина 4', content: 'Це четверта новина' },
+    ];
+
+    let startIndex = 0;
+    const batchSize = 3;
+
+    function loadMoreNews() {
+        const newsList = document.getElementById('newsList');
+
+        for (let i = startIndex; i < startIndex + batchSize && i < newsData.length; i++) {
+            const newsItem = newsData[i];
+            const listItem = document.createElement('li');
+            listItem.classList.add('news-item');
+            listItem.innerHTML = `<h3>${newsItem.title}</h3><p>${newsItem.content}</p>`;
+            newsList.appendChild(listItem);
+        }
+
+        startIndex += batchSize;
+
+        if (startIndex >= newsData.length) {
+            const loadMoreButton = document.getElementById('loadMoreButton');
+            loadMoreButton.style.display = 'none';
+        }
+    }
+
+    window.onscroll = function() {
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+            loadMoreNews();
+        }
+    };
+</script>
+
+</body>
+</html>
